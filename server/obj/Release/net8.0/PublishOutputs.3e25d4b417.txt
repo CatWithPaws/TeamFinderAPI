@@ -1,0 +1,11 @@
+/home/lequile/TeamFinderAPI/build/TeamFinderAPI
+/home/lequile/TeamFinderAPI/build/appsettings.Development.json
+/home/lequile/TeamFinderAPI/build/appsettings.json
+/home/lequile/TeamFinderAPI/build/TeamFinderAPI.dll
+/home/lequile/TeamFinderAPI/build/TeamFinderAPI.deps.json
+/home/lequile/TeamFinderAPI/build/TeamFinderAPI.runtimeconfig.json
+/home/lequile/TeamFinderAPI/build/TeamFinderAPI.pdb
+/home/lequile/TeamFinderAPI/build/Microsoft.OpenApi.dll
+/home/lequile/TeamFinderAPI/build/Swashbuckle.AspNetCore.Swagger.dll
+/home/lequile/TeamFinderAPI/build/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/lequile/TeamFinderAPI/build/Swashbuckle.AspNetCore.SwaggerUI.dll
