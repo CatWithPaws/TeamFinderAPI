@@ -1,10 +1,18 @@
+using Microsoft.EntityFrameworkCore;
 using TeamFinderAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.AddSqlServerDbContext<TeamFindAPIContext>("db");
+builder.Services.AddDbContext<TeamFindAPIContext>(options => {
+#if DEBUG
+    var connectionString = builder.Configuration.GetConnectionString("PostgresDev");
+#else
+    var connectionString = builder.Configuration.GetConnectionString("PostgresProd");
+#endif
+    options.UseNpgsql(connectionString);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,15 +25,19 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     // Creating local db while delevoping 
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<TeamFindAPIContext>();
-        context.Database.EnsureCreated();
-    }
 
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<TeamFindAPIContext>();
+        
+        db.Database.EnsureCreated();
+        //var context = scope.ServiceProvider.GetRequiredService<TeamFindAPIContext>();
+        //context.Database.EnsureCreated();
+    }
 
 app.UseHttpsRedirection();
 

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeamFinderAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfeb65239cc75ce2908f327214918e376d6fecc6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7d1df997decd495e1498799ff1ee87c1578262b")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeamFinderAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeamFinderAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

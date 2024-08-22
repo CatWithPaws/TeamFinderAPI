@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using TeamFinderAPI.Data;
 
 namespace TeamFinderAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -28,5 +29,12 @@ public class WeatherForecastController : ControllerBase
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();
+    }
+
+    [HttpGet(Name = "Users")]
+    public IEnumerable<User> GetUsers(){
+        using (var db = ){
+
+        }
     }
 }

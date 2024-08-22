@@ -3,7 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TeamFinderAPI.Data;
 
-public class TeamFindAPIContext(DbContextOptions options) : DbContext(options)
+public class TeamFindAPIContext : DbContext
 {
-    public DbSet<User> Users => Set<User>();
+
+   public TeamFindAPIContext(DbContextOptions<TeamFindAPIContext> options) : base(options)
+        {
+        }
+
+    public DbSet<User> Users { get; set;}
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().ToTable("User");
+        }
 }
