@@ -2,3 +2,5 @@ mssql/
 postgres/
 build/
 .vscode/
+TeamFinderAPI/bin
+TeamFinderAPI/obj
