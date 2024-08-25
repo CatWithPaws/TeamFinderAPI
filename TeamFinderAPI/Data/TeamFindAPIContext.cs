@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TeamFinderAPI.Models;
 
 
 namespace TeamFinderAPI.Data;
@@ -11,6 +12,7 @@ public class TeamFindAPIContext : DbContext
         }
 
     public DbSet<User> Users { get; set;}
+    public DbSet<Post> Posts{ get; set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

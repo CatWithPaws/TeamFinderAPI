@@ -6,7 +6,7 @@ using TeamFinderAPI.Models;
 
 namespace TeamFinderAPI.Repository
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IPostRepository : IGenericRepository<Post>
     {
         
     }

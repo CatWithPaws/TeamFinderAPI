@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TeamFinderAPI.Data;
 using TeamFinderAPI.Repository;
+using TeamFinderAPI.Repository.PostReposity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Initialize Dependency Injection interfaces
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IPostRepository, PostRepository>();
 
 builder.Services.AddDbContext<TeamFindAPIContext>(options => {
 #if DEBUG

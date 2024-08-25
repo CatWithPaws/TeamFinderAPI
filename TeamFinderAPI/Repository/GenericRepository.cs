@@ -44,7 +44,7 @@ namespace TeamFinderAPI.Repository
 
         public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
