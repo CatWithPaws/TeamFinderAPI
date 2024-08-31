@@ -8,7 +8,6 @@ namespace TeamFinderAPI.Controllers.PostBody
     //Need for AddPost method
     public class CreatePostBody
     {
-        public int id { get; set; }
         public string name { get; set; }  = String.Empty;
         
         public int createdUserId { get; set; }

@@ -7,20 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+
+
+
 // Initialize Dependency Injection interfaces
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IPostRepository, PostRepository>();
-
-builder.Services.AddDbContext<TeamFindAPIContext>(options => {
-#if DEBUG
-    var connectionString = builder.Configuration.GetConnectionString("PostgresDev");
-#else
-    var connectionString = builder.Configuration.GetConnectionString("PostgresProd");
-#endif
-    options.UseNpgsql(connectionString);
-});
-
-
 
 
 
@@ -28,6 +21,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<TeamFindAPIContext>(options => {
+#if DEBUG
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+#else
+    var connectionString = builder.Configuration.GetConnectionString("PostgresProd");
+#endif
+    options.UseNpgsql(connectionString);
+    
+});
 
 var app = builder.Build();
 
@@ -41,8 +44,8 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
     {
         var db = scope.ServiceProvider.GetRequiredService<TeamFindAPIContext>();
-        
         db.Database.EnsureCreated();
+        
         //var context = scope.ServiceProvider.GetRequiredService<TeamFindAPIContext>();
         //context.Database.EnsureCreated();
     }
@@ -54,3 +57,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

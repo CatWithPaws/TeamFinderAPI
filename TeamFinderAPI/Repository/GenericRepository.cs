@@ -20,6 +20,7 @@ namespace TeamFinderAPI.Repository
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);
+            
         }
 
         public void AddRange(IEnumerable<T> entities)

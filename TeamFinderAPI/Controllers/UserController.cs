@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TeamFinderAPI.Controllers.PostBody;
 using TeamFinderAPI.Data;
-using TeamFinderAPI.Models;
+using TeamFinderAPI.DB.Models;
 using TeamFinderAPI.Repository;
 
 namespace server.Controllers
@@ -33,8 +34,15 @@ namespace server.Controllers
         }
 
         [HttpPost("add")]
-        public void AddUser([FromBody] User user){
-            _userRepository.Add(user);
+        public void AddUser([FromBody] CreateUserBody user){
+            User newUser = new User{
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password
+            } ;
+
+            _userRepository.Add(newUser);
+            
         }
         
 
@@ -43,5 +51,9 @@ namespace server.Controllers
             _userRepository.Remove(user);
         }
         
+        [HttpGet("save")]
+        public void Save(){
+            _userRepository.Save();
+        }
     }
 }

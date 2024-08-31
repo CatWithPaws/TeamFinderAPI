@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TeamFinderAPI.Controllers.PostBody;
-using TeamFinderAPI.Models;
+using TeamFinderAPI.DB.Models;
 using TeamFinderAPI.Repository;
 
 namespace TeamFinderAPI.Controllers
@@ -14,7 +14,11 @@ namespace TeamFinderAPI.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
-        private readonly IUserRepository _userRepository;
+
+        
+        public PostController(IPostRepository postRepository){
+            _postRepository = postRepository;
+        }
 
         private readonly int _postCount = 12;
 
@@ -30,17 +34,8 @@ namespace TeamFinderAPI.Controllers
 
         [HttpPost("add")]
         public IActionResult AddNew([FromBody] CreatePostBody post){
-            Post newPost = new Post{
-                Id = post.id,
-                Name = post.name,
-                CreatedBy = _userRepository.GetById(post.createdUserId),
-                Game = post.game,
-                Text = post.text,
-                Tags = post.tags,
-                CreatedDate = post.createdDate,
-                ModifiedDate = post.modifiedDate
-
-            };
+           
+            Post newPost = new Post(post.name,post.createdUserId,post.game,post.text,post.tags);
             _postRepository.Add(newPost);
             return Ok();
         }

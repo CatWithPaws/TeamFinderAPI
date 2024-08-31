@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TeamFinderAPI.Data;
-using TeamFinderAPI.Models;
+using TeamFinderAPI.DB.Models;
 
 namespace TeamFinderAPI.Repository.PostReposity
 {
