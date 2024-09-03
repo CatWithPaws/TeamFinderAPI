@@ -8,6 +8,6 @@ namespace TeamFinderAPI.Repository
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
-        
+        public void Save();
     }
 }

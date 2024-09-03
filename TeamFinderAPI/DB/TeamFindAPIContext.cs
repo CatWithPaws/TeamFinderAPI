@@ -36,6 +36,9 @@ public class TeamFindAPIContext : DbContext
                 .HasMany(e => e.Posts)
                 .WithOne(e=> e.CreatedBy)
                 .HasForeignKey(e=>e.CreatedById);
+            modelBuilder.Entity<User>()
+                .HasIndex(e => e.Login)
+                .IsUnique();
             modelBuilder.Entity<Post>().ToTable("Post");
         }
 }

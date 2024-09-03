@@ -13,7 +13,7 @@ namespace TeamFinderAPI.Data
         public static UserDTO ToDTO(this User user){
             return new UserDTO{
                 ID = user.ID,
-                Name = user.Name,
+                Name = user.Login,
                 Email = user.Email,
             };
         }

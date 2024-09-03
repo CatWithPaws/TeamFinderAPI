@@ -34,21 +34,28 @@ namespace server.Controllers
         }
 
         [HttpPost("add")]
-        public void AddUser([FromBody] CreateUserBody user){
+        public IActionResult AddUser([FromBody] RegistrationBody user){
+            
+            if(_userRepository.UserWithLoginExists(user.Name)){
+                return BadRequest("User already exists");
+            }
+            
             User newUser = new User{
-                Name = user.Name,
+                Login = user.Name,
                 Email = user.Email,
                 Password = user.Password
             } ;
 
             _userRepository.Add(newUser);
-            
+            _userRepository.Save();
+            return Ok();
         }
         
 
         [HttpDelete]
         public void RemoveUser([FromBody] User user){
             _userRepository.Remove(user);
+            _userRepository.Save();
         }
         
         [HttpGet("save")]

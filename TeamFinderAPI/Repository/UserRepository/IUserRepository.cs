@@ -9,5 +9,7 @@ namespace TeamFinderAPI.Repository
     public interface IUserRepository : IGenericRepository<User>
     {
         public void Save();
+        public User FindByLogin(string login);
+        public bool UserWithLoginExists(string login);
     }
 }

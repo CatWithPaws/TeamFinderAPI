@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TeamFinderAPI.Controllers.PostBody
 {
-    public class CreateUserBody
+    public class RegistrationBody
     {
     public string Name { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;

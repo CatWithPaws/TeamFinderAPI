@@ -12,5 +12,10 @@ namespace TeamFinderAPI.Repository.PostReposity
         public PostRepository(TeamFindAPIContext context) : base(context)
         {
         }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

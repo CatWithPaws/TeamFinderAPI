@@ -11,6 +11,15 @@ namespace TeamFinderAPI.Repository
     {
         public UserRepository(TeamFindAPIContext context) : base(context){}
 
+        public User FindByLogin(string login) 
+        {
+            return _context.Set<User>().FirstOrDefault(e => e.Login == login);
+        }
+
+        public bool UserWithLoginExists(string login){
+            return _context.Set<User>().Any(e => e.Login == login);
+        }
+
         public void Save()
         {
             _context.SaveChanges();
