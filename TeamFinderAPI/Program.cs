@@ -15,12 +15,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
-
+builder.Services.AddAuthentication()
+    .AddJwtBearer(options =>{
+        
+    });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddDbContext<TeamFindAPIContext>(options => {
 #if DEBUG

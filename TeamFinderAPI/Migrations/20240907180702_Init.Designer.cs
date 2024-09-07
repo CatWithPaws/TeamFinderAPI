@@ -12,8 +12,8 @@ using TeamFinderAPI.Data;
 namespace TeamFinderAPI.Migrations
 {
     [DbContext(typeof(TeamFindAPIContext))]
-    [Migration("20240902185821_ChangeNameToLoginAndLoginIsUnique")]
-    partial class ChangeNameToLoginAndLoginIsUnique
+    [Migration("20240907180702_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,9 +81,9 @@ namespace TeamFinderAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("bytea");
 
                     b.HasKey("ID");
 

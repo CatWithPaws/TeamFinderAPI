@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeamFinderAPI.Controllers.PostBody;
 using TeamFinderAPI.Data;
@@ -37,10 +38,12 @@ namespace TeamFinderAPI.Controllers
             return DTO;
         }
 
+
         [HttpGet("{id}")]
         public PostDTO GetById([FromRoute]int id){
             return _postRepository.GetById(id).ToDTO();
         }
+        
 
         [HttpPost("add")]
         public IActionResult AddNew([FromBody] CreatePostBody post){

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TeamFinderAPI.Controllers.PostBody;
@@ -39,11 +40,13 @@ namespace server.Controllers
             if(_userRepository.UserWithLoginExists(user.Name)){
                 return BadRequest("User already exists");
             }
-            
+            System.Security.Cryptography.HashAlgorithm hashAlgo = new System.Security.Cryptography.SHA256Managed();
+            byte[] passBytes  =Encoding.UTF8.GetBytes(user.Password);
+            byte[] hashedPass = hashAlgo.ComputeHash(passBytes);
             User newUser = new User{
                 Login = user.Name,
                 Email = user.Email,
-                Password = user.Password
+                Password = hashedPass
             } ;
 
             _userRepository.Add(newUser);

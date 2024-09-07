@@ -13,7 +13,7 @@ namespace TeamFinderAPI.Repository
 
         public User FindByLogin(string login) 
         {
-            return _context.Set<User>().FirstOrDefault(e => e.Login == login);
+            return _context.Set<User>().FirstOrDefault(e => e.Login.Equals(login));
         }
 
         public bool UserWithLoginExists(string login){

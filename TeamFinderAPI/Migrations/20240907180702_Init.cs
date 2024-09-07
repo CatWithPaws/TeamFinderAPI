@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace TeamFinderAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class UserAndPostTables : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,8 @@ namespace TeamFinderAPI.Migrations
                 {
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
+                    Login = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<byte[]>(type: "bytea", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -56,6 +56,12 @@ namespace TeamFinderAPI.Migrations
                 name: "IX_Post_CreatedById",
                 table: "Post",
                 column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Login",
+                table: "User",
+                column: "Login",
+                unique: true);
         }
 
         /// <inheritdoc />
