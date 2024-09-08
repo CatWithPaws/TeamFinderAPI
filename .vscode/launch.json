@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/bin/Debug/net8.0/TeamFinderAPI.dll",
+            "program": "${workspaceFolder}/TeamFinderAPI/bin/Debug/net8.0/TeamFinderAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/TeamFinderAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -32,7 +32,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/src/TeamFinderAPI.csproj"
+                "appProject": "${workspaceFolder}/TeamFinderAPI/TeamFinderAPI.csproj"
             }
         }
     ]
