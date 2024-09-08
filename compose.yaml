@@ -6,6 +6,8 @@ services:
     ports:
       - 80:80
     restart: unless-stopped
+    depends_on:
+      - api
   api:
     build:
       context: "./TeamFinderAPI"
