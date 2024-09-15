@@ -3,8 +3,11 @@
 ### Auth
 Log Into account
 
+
+```
+
 ```Json
-path api/auth
+
 
 //Request Body
 {

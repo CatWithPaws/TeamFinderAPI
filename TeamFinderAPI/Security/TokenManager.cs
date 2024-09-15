@@ -25,7 +25,9 @@ namespace TeamFinderAPI.Security
                 Subject = new ClaimsIdentity(new []{
                     new Claim(ClaimTypes.Name,username)
                 }),
-                
+                Claims = {
+                    
+                },
                 Expires = now.AddMinutes(Convert.ToInt32(expireTimeInMinutes)),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(symmetricKey),
