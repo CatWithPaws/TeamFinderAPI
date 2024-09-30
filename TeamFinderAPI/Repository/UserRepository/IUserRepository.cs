@@ -11,5 +11,7 @@ namespace TeamFinderAPI.Repository
         public void Save();
         public User FindByLogin(string login);
         public bool UserWithLoginExists(string login);
+        public bool UserWithGoogleTokenExists(string token);
+        public User FindByGoogleId(string googleId);
     }
 }

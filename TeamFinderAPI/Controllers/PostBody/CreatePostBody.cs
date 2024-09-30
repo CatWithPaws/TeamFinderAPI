@@ -12,6 +12,7 @@ namespace TeamFinderAPI.Controllers.PostBody
         
         public int createdUserId { get; set; }
         public string game { get; set; } = String.Empty;
+        public string type { get; set; } = String.Empty;
         public string text { get; set; } = String.Empty;
         public string tags { get; set; } = String.Empty;
         public DateTime createdDate { get; set;} = DateTime.MinValue;

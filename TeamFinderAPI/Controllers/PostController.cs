@@ -48,7 +48,7 @@ namespace TeamFinderAPI.Controllers
         [HttpPost("add")]
         public IActionResult AddNew([FromBody] CreatePostBody post){
            
-            Post newPost = new Post(post.name,post.createdUserId,post.game,post.text,post.tags);
+            Post newPost = new Post(post.name,post.type,post.createdUserId,post.game,post.text,post.tags);
             _postRepository.Add(newPost);
             _postRepository.Save();
             return Ok();

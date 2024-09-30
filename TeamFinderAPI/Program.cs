@@ -69,7 +69,6 @@ builder.Services.AddDbContext<TeamFindAPIContext>(options => {
     var connectionString = builder.Configuration.GetConnectionString("PostgresProd");
 #endif
     options.UseNpgsql(connectionString);
-    
 });
 
 
@@ -85,14 +84,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Dev",
         policy =>
         {
-            policy.WithOrigins("http://127.0.0.1:5173").AllowAnyHeader()
+            policy.WithOrigins("http://localhost:5173").AllowAnyHeader()
                                 .AllowAnyMethod().AllowCredentials();
         });
 });
 
-
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())

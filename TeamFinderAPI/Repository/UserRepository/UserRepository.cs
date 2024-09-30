@@ -24,5 +24,15 @@ namespace TeamFinderAPI.Repository
         {
             _context.SaveChanges();
         }
+
+        public bool UserWithGoogleTokenExists(string token){
+            return _context.Set<User>().Any(e => e.GoogleId == token);
+        }
+
+
+        public User FindByGoogleId(string googleId)
+        {
+            return _context.Set<User>().FirstOrDefault(e => e.GoogleId.Equals(googleId));
+        }
     }
 }
