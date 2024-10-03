@@ -37,7 +37,7 @@ namespace TeamFinderAPI.Helper
 
             var request = new HttpRequestMessage(httpMethod, url);
 
-            if (accessToken != null)
+            if (!string.IsNullOrEmpty(accessToken))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }

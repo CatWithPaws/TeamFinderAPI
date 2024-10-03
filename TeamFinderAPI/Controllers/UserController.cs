@@ -11,7 +11,6 @@ using TeamFinderAPI.DB.Models;
 using TeamFinderAPI.Helper;
 using TeamFinderAPI.JwtAuthentication;
 using TeamFinderAPI.Repository;
-using TeamFinderAPI.Service;
 
 namespace server.Controllers
 {

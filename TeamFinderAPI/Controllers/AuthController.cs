@@ -14,9 +14,7 @@ using TeamFinderAPI.DB.Models;
 using TeamFinderAPI.Helper;
 using TeamFinderAPI.JwtAuthentication;
 using TeamFinderAPI.Repository;
-using TeamFinderAPI.Service;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Util.Store;
+using Microsoft.AspNetCore.Cors;
 
 namespace TeamFinderAPI.Controllers
 {
@@ -33,8 +31,8 @@ namespace TeamFinderAPI.Controllers
         private const string PkceSessionKey = "codeVerifier";
         private const string GoogleScope = "profile";
 
-        private const string GoogleClientId = "384010096834-b2nqf1gfe13v90nfiglkqcpgd0a73deh.apps.googleusercontent.com";
-        private const string GoogleClientSecret = "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";
+        private const string GoogleClientId = "334288315445-2vjeicc4u1hfpasr2ha0uckg4hjt86v4.apps.googleusercontent.com";
+        private const string GoogleClientSecret = "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";
         
 
 
@@ -153,6 +151,7 @@ namespace TeamFinderAPI.Controllers
         [HttpGet("google")]
         public async Task<IResult> GoogleAuth(JwtOptions jwtOptions,[FromQuery] string googleToken)
         {
+
             GoogleProfileInfoAnswer userProfile = await HttpClientHelper.SendGetRequest<GoogleProfileInfoAnswer>("https://www.googleapis.com/oauth2/v2/userinfo",
                                                            new Dictionary<string, string>() { },
                                                            googleToken);
@@ -242,7 +241,6 @@ namespace TeamFinderAPI.Controllers
     public class GoogleProfileInfoAnswer{
         public string id { get; set; }
         public string email { get; set; }
-
         public string verified_email { get; set; }
         public string name { get; set; }
         public string given_name { get; set; }
