@@ -23,12 +23,16 @@ namespace TeamFinderAPI.Repository
             
         }
 
+        public T FindBy (Expression<Func<T,bool>> predicate){
+            return _context.Set<T>().FirstOrDefault(predicate);
+        }
+
         public void AddRange(IEnumerable<T> entities)
         {
             _context.Set<T> ().AddRange(entities);
         }
 
-        public IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> FindAllBy(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T> ().Where(predicate);
         }

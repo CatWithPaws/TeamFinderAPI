@@ -47,12 +47,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
         opts.SaveToken = true;
     });
-builder.Services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    options.ClientId = "384010096834-b2nqf1gfe13v90nfiglkqcpgd0a73deh.apps.googleusercontent.com";
-                    options.ClientSecret = "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";
-                });
+
 // 👇 Configuring the Authorization Service
 builder.Services.AddAuthorization();
 

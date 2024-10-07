@@ -15,6 +15,7 @@ using TeamFinderAPI.Helper;
 using TeamFinderAPI.JwtAuthentication;
 using TeamFinderAPI.Repository;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace TeamFinderAPI.Controllers
 {
@@ -24,7 +25,6 @@ namespace TeamFinderAPI.Controllers
     {
         private readonly IUserRepository _userRepository;
 
-        private readonly List<(string, DateTime)> blackList;
         System.Timers.Timer blacklistCheckTimer;
 
         private const string RedirectUrl = "http://lequilesoftware.fun/api/auth/google/success";
@@ -33,13 +33,15 @@ namespace TeamFinderAPI.Controllers
 
         private const string GoogleClientId = "334288315445-2vjeicc4u1hfpasr2ha0uckg4hjt86v4.apps.googleusercontent.com";
         private const string GoogleClientSecret = "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";
+
+        private const string RefreshTokenSecret = "asdaghaslun178gfasd?1283f./asdf7912fnas812f/askfM<Afasj!l3%J*!5_";
         
 
 
         public AuthController(IUserRepository repository)
         {
             _userRepository = repository;
-            blacklistCheckTimer = new System.Timers.Timer(5000);
+            blacklistCheckTimer = new System.Timers.Timer(1000 * 60 * 5);
             blacklistCheckTimer.Elapsed += (a, b) => { CheckBlackList(); };
             blacklistCheckTimer.Enabled = true;
             blacklistCheckTimer.AutoReset = true;
@@ -47,15 +49,11 @@ namespace TeamFinderAPI.Controllers
 
         private void CheckBlackList()
         {
-            Console.WriteLine("Checking blackList");
-            var NowDate = DateTime.UtcNow;
+            var UserWithExpiredRefreshTokens = _userRepository.FindAllBy(u => u.RefreshTokenExpiration < DateTime.UtcNow && u.RefreshTokenExpiration != DateTime.MinValue);
 
-            foreach (var item in blackList)
-            {
-                if (NowDate > item.Item2)
-                {
-                    blackList.Remove(item);
-                }
+            foreach(var user in UserWithExpiredRefreshTokens){
+                user.RefreshToken = string.Empty;
+                user.RefreshTokenExpiration = DateTime.MinValue;
             }
         }
 
@@ -75,6 +73,7 @@ namespace TeamFinderAPI.Controllers
             System.Security.Cryptography.HashAlgorithm hashAlgo = System.Security.Cryptography.SHA256.Create();
             byte[] passBytes = Encoding.UTF8.GetBytes(user.Password);
             byte[] hashedPass = hashAlgo.ComputeHash(passBytes);
+            
             User newUser = new User
             {
                 Login = user.Name,
@@ -113,8 +112,8 @@ namespace TeamFinderAPI.Controllers
         public IResult AuthByLogin(JwtOptions jwtOptions, AuthBody body)
         {
 
-            User foundUser = _userRepository.FindByLogin(body.Name);
-            if (foundUser == null)
+            User user = _userRepository.FindByLogin(body.Name);
+            if (user == null)
             {
                 return Results.BadRequest("User not found");
             }
@@ -123,7 +122,7 @@ namespace TeamFinderAPI.Controllers
             byte[] passBytes = Encoding.UTF8.GetBytes(body.Password);
             byte[] hashedPass = hashAlgo.ComputeHash(passBytes);
 
-            if (!foundUser.Password.SequenceEqual(hashedPass))
+            if (!user.Password.SequenceEqual(hashedPass))
             {
                 return Results.BadRequest("password is incorrect");
             }
@@ -134,11 +133,12 @@ namespace TeamFinderAPI.Controllers
                 body.Name,
                 TimeSpan.FromMinutes(5),
                 new[] { "read_todo", "create_todo" });
-
+            string refreshToken = CreateRefreshToken(jwtOptions, user);
             //returns a json response with the access token
             return Results.Ok(new
             {
                 access_token = accessToken,
+                refresh_token = refreshToken,
                 expiration = (int)tokenExpiration.TotalSeconds,
                 type = "bearer",
                 username = body.Name
@@ -162,46 +162,85 @@ namespace TeamFinderAPI.Controllers
 
             return AuthorizeGoogleUser(jwtOptions,userProfile.id);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="googleToken"></param>
-        /// <returns>Google Id</returns>
+        
+        [HttpGet("refresh")]
+        public IResult RefreshToken(JwtOptions jwtOptions, [FromQuery] string refreshToken){
+            var User = _userRepository.FindAllBy(a => a.RefreshToken == refreshToken).FirstOrDefault();
+            if(User == null) return Results.BadRequest("refresh token expired");
+
+            string newToken = CreateAccessToken(jwtOptions,User.Login,TimeSpan.FromMinutes(5),
+                new[] { "read_todo", "create_todo" });
+
+            return Results.Ok(new{
+                access_token = newToken,
+                username = User.Login
+            });
+        }
+
         private async Task CreateNewGoogleUser(GoogleProfileInfoAnswer userProfile){
             var user = new User();
             
-
             user.Login = userProfile.email.Replace("@gmail.com","");
             user.Email = userProfile.email;
             user.GoogleId = userProfile.id;
 
             _userRepository.Add(user);
             _userRepository.Save();
-
         }
 
+        
         private IResult AuthorizeGoogleUser(JwtOptions jwtOptions,string googleId){
             User googleUser = _userRepository.FindByGoogleId(googleId);
 
             if(googleUser == null){ return Results.NotFound("Something went wrong");}
 
             var tokenExpiration = TimeSpan.FromSeconds(jwtOptions.ExpirationSeconds);
+
             var accessToken = CreateAccessToken(
                 jwtOptions,
                 googleUser.Login,
                 TimeSpan.FromMinutes(5),
                 new[] { "read_todo", "create_todo" });
-            
+
+            var refreshToken = CreateRefreshToken(jwtOptions,googleUser);
+
             return Results.Ok(new
             {
                 access_token = accessToken,
+                refresh_token = refreshToken,
                 expiration = (int)tokenExpiration.TotalSeconds,
                 type = "bearer",
                 username = googleUser.Login
             });
         }
 
-        string CreateAccessToken(
+        private string CreateRefreshToken(JwtOptions jwtOptions,User user){
+            var keyBytes = Encoding.UTF8.GetBytes(jwtOptions.RefreshSigningKey);
+            var symmetricKey = new SymmetricSecurityKey(keyBytes);
+
+            var signingCredentials = new SigningCredentials(
+                symmetricKey,
+                SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>()
+                {
+                    new Claim("name", user.Login),
+                };
+            var ExpirationTime = DateTime.UtcNow.AddHours(1);
+            var token = new JwtSecurityToken(
+                claims:claims,
+                signingCredentials: signingCredentials,
+                expires: ExpirationTime);
+
+            var refreshToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            user.RefreshTokenExpiration = ExpirationTime;
+            user.RefreshToken = refreshToken;
+            
+            _userRepository.Save();
+            return refreshToken;
+        }
+
+        private string CreateAccessToken(
         JwtOptions jwtOptions,
         string username,
         TimeSpan expiration,

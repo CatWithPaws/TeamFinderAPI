@@ -11,6 +11,7 @@ using TeamFinderAPI.Repository;
 
 namespace TeamFinderAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/post")]
     public class PostController : ControllerBase

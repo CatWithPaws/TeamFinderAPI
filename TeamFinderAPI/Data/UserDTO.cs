@@ -11,7 +11,9 @@ namespace TeamFinderAPI.Data
         public int ID { get; set; }
         public string Name { get; set; } = string.Empty;       
         public string Email { get; set; } = string.Empty;
-
+        
+        public string TelegramLink { get; set; } = string.Empty;
+        public string DiscordUsername { get; set; } = string.Empty;
     }
 
     

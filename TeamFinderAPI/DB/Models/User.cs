@@ -16,5 +16,10 @@ public sealed partial class User{
     
     public string GoogleId { get; set; } = string.Empty;
     public ICollection<Post> Posts{ get;}
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime RefreshTokenExpiration { get; set; } = DateTime.MinValue;
+
+    public string TelegramLink;
+    public string DiscordUsername;
 
 }

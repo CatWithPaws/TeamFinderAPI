@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using TeamFinderAPI.Controllers.PostBody;
+using TeamFinderAPI.Data;
 using TeamFinderAPI.DB.Models;
 using TeamFinderAPI.Helper;
 using TeamFinderAPI.JwtAuthentication;
 using TeamFinderAPI.Repository;
+using TeamFinderAPI.Service;
 
 namespace server.Controllers
 {
@@ -23,8 +25,6 @@ namespace server.Controllers
 
         private readonly IUserRepository _userRepository;
         
-       
-
         public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -32,22 +32,72 @@ namespace server.Controllers
         }
 
         [HttpGet("{id}")]
-        public User GetUser(int id)
+        public IResult GetUser(int id)
         {
-            return _userRepository.GetById(id);
+            User user = _userRepository.GetById(id);
+            if(user == null){
+                return Results.NotFound();
+            }
+            return Results.Ok(user.ToDTO());
+        }
+
+        [HttpGet("getmyself")]
+        public async Task<IResult> GetUserByToken(){
+            var token = await Utils.DecipherToken(HttpContext);
+
+            var claim = token.Claims.FirstOrDefault(c => c.Type == "name");
+            if(claim == null){ return Results.NotFound(); }
+            
+            string username = claim.Value;
+            User user = _userRepository.FindBy(i => i.Login == username);
+            
+            if(user == null){
+                return Results.BadRequest("Something went wrong");
+            }
+
+            return Results.Ok(user);
         }
 
         [HttpGet("logout")]
         public async Task<IResult> LogOut()
         {
-            HttpContext ctx = HttpContext;
-            var jwt = await ctx.GetTokenAsync("access_token");
-            var decipher = new JwtSecurityTokenHandler();
-            JwtSecurityToken obj = decipher.ReadJwtToken(jwt);
+            var token = await Utils.DecipherToken(HttpContext);
+            var claim = token.Claims.FirstOrDefault(c => c.Type == "name");
+            if(claim == null){ return Results.NotFound(); }
+            string username = claim.Value;
+            User user = _userRepository.FindBy(i => i.Login == username);
+            if(user == null){
+                return Results.BadRequest("Something went wrong");
+            }
 
-            return Results.Ok(obj);
+            user.RefreshToken = "";
+            _userRepository.Save();
+            return Results.Ok();
         }
+        
+        [HttpPut("update")]
+        public async Task<IResult> UpdateUser([FromBody] UserDTO userToUpdate){
 
+            var token = await Utils.DecipherToken(HttpContext);
+
+            var name = token.Claims.FirstOrDefault(c => c.Type == "name");
+            if(name == null) { return Results.BadRequest(); }
+
+            var user = _userRepository.GetById(userToUpdate.ID);
+            
+            if(user == null){ return Results.NotFound();}
+            if(user.Login != name.Value){
+                return Results.BadRequest();
+            }
+
+            user.TelegramLink = userToUpdate.TelegramLink;
+            user.DiscordUsername = userToUpdate.DiscordUsername;
+            user.Login = userToUpdate.Name;
+
+            _userRepository.Save();
+
+            return Results.Ok();
+        }
 
         [HttpDelete]
         public void RemoveUser([FromBody] User user)
