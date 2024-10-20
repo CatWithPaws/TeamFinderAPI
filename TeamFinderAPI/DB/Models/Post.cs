@@ -13,12 +13,13 @@ namespace TeamFinderAPI.DB.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; } = String.Empty;
+        public string Title { get; set; } = String.Empty;
         [Required]
         public PostType Type { get; set; } = PostType.None;
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
         [Required]
-        public User CreatedBy { get; set; }
-        public int CreatedById { get; set; }
+        public int UserId { get; set; }
         public string Game { get; set; } = String.Empty;
         [Required]
         public string Text { get; set; } = String.Empty;
@@ -26,14 +27,17 @@ namespace TeamFinderAPI.DB.Models
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.MinValue;
         public DateTime ModifiedDate { get; set; } = DateTime.MinValue;
+
+        public string? TelegramLink { get; set; } = String.Empty;
+        public string? Discord {get; set;} = String.Empty;
         public Post()
         {
 
         }
         public Post(string name, string type, int userCreated, string game, string text, string tags)
         {
-            Name = name;
-            CreatedById = userCreated;
+            Title = name;
+            UserId = userCreated;
             Game = game;
             Text = text;
             Tags = tags;

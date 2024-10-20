@@ -12,20 +12,27 @@ namespace TeamFinderAPI.Data
         
         public static UserDTO ToDTO(this User user){
             return new UserDTO{
-                ID = user.ID,
+                ID = user.Id,
                 Name = user.Login,
                 Email = user.Email,
+                TelegramLink = user.TelegramLink,
+                DiscordUsername = user.DiscordUsername,
             };
         }
         public static PostDTO ToDTO(this Post post){
+            if(post.User == null) throw new ArgumentNullException("USER IS NULL");
             return new PostDTO{
                 Id = post.Id,
-                Name = post.Name,
+                Name = post.Title,
                 Game = post.Game,
                 Text = post.Text,
-                Tags = post.Tags,
-                CreatedByUser = post.CreatedBy.ToDTO(),
+                Tags = post.Tags.Split('#'),
+                CreatedByUser = post.User.ToDTO(),
                 CreatedDate = post.CreatedDate,
+                Socials = new Socials{
+                    Telegram = post.TelegramLink,
+                    Discord = post.Discord
+                }
 
             };
         }

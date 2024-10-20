@@ -199,7 +199,7 @@ namespace TeamFinderAPI.Controllers
             var accessToken = CreateAccessToken(
                 jwtOptions,
                 googleUser.Login,
-                TimeSpan.FromMinutes(5),
+                tokenExpiration,
                 new[] { "read_todo", "create_todo" });
 
             var refreshToken = CreateRefreshToken(jwtOptions,googleUser);
@@ -225,7 +225,7 @@ namespace TeamFinderAPI.Controllers
                 {
                     new Claim("name", user.Login),
                 };
-            var ExpirationTime = DateTime.UtcNow.AddHours(1);
+            var ExpirationTime = DateTime.UtcNow.AddDays(1);
             var token = new JwtSecurityToken(
                 claims:claims,
                 signingCredentials: signingCredentials,

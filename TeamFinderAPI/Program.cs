@@ -64,6 +64,10 @@ builder.Services.AddDbContext<TeamFindAPIContext>(options => {
     var connectionString = builder.Configuration.GetConnectionString("PostgresProd");
 #endif
     options.UseNpgsql(connectionString);
+
+    options.UseLazyLoadingProxies()
+           .UseNpgsql(connectionString);
+
 });
 
 

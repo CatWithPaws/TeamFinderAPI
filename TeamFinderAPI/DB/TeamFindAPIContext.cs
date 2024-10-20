@@ -23,10 +23,18 @@ public class TeamFindAPIContext : DbContext
             .Build();
             
 #if DEBUG
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+        optionsBuilder
+            .UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+        optionsBuilder.UseLazyLoadingProxies()
+            .UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
 #else
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString("PostgresProd"));
+        optionsBuilder
+            .UseNpgsql(configuration.GetConnectionString("PostgresProd"));
+        optionsBuilder.UseLazyLoadingProxies()
+            .UseNpgsql(configuration.GetConnectionString("PostgresProd"));
 #endif
+
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,11 +42,13 @@ public class TeamFindAPIContext : DbContext
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Posts)
-                .WithOne(e=> e.CreatedBy)
-                .HasForeignKey(e=>e.CreatedById);
+                .WithOne(e=> e.User)
+                .HasForeignKey(e => e.UserId)
+                .IsRequired();        
             modelBuilder.Entity<User>()
                 .HasIndex(e => e.Login)
                 .IsUnique();
             modelBuilder.Entity<Post>().ToTable("Post");
+            base.OnModelCreating(modelBuilder);
         }
 }

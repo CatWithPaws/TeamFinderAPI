@@ -55,7 +55,7 @@ namespace server.Controllers
                 return Results.BadRequest("Something went wrong");
             }
 
-            return Results.Ok(user);
+            return Results.Ok(user.ToDTO());
         }
 
         [HttpGet("logout")]
@@ -76,27 +76,28 @@ namespace server.Controllers
         }
         
         [HttpPut("update")]
-        public async Task<IResult> UpdateUser([FromBody] UserDTO userToUpdate){
+        public async Task<IResult> UpdateUser([FromBody] UpdatePlayerBody userToUpdate){
 
             var token = await Utils.DecipherToken(HttpContext);
 
-            var name = token.Claims.FirstOrDefault(c => c.Type == "name");
+            var name = token.Claims.FirstOrDefault(c => c.Type == "name").Value;
             if(name == null) { return Results.BadRequest(); }
 
-            var user = _userRepository.GetById(userToUpdate.ID);
+            var user = _userRepository.FindBy(u => u.Login == name);
             
             if(user == null){ return Results.NotFound();}
-            if(user.Login != name.Value){
+
+            if(user.Login != name){
                 return Results.BadRequest();
             }
 
             user.TelegramLink = userToUpdate.TelegramLink;
             user.DiscordUsername = userToUpdate.DiscordUsername;
-            user.Login = userToUpdate.Name;
+            user.DispayName = userToUpdate.DisplayName;
 
             _userRepository.Save();
 
-            return Results.Ok();
+            return Results.Ok(user.ToDTO());
         }
 
         [HttpDelete]

@@ -8,6 +8,7 @@ namespace TeamFinderAPI.Repository
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
+        public IEnumerable<Post> FindPostsBySearch(string query);
         public void Save();
     }
 }
