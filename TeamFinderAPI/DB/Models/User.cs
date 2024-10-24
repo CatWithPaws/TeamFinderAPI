@@ -10,7 +10,7 @@ public class User{
     public int Id { get; set; }
     [Required]
     public string Login { get; set; } = string.Empty;
-    public string DispayName { get; set; } = string.Empty;
+    public string DisplayName { get; set; } = string.Empty;
     public byte[] Password { get; set; } = {};
     [Required]
     public string Email { get; set; } = string.Empty;

@@ -14,6 +14,7 @@ namespace TeamFinderAPI.Data
             return new UserDTO{
                 ID = user.Id,
                 Name = user.Login,
+                DisplayName = user.DisplayName,
                 Email = user.Email,
                 TelegramLink = user.TelegramLink,
                 DiscordUsername = user.DiscordUsername,
@@ -30,8 +31,8 @@ namespace TeamFinderAPI.Data
                 CreatedByUser = post.User.ToDTO(),
                 CreatedDate = post.CreatedDate,
                 Socials = new Socials{
-                    Telegram = post.TelegramLink,
-                    Discord = post.Discord
+                    Telegram = string.IsNullOrEmpty(post.TelegramLink) ? null : post.TelegramLink,
+                    Discord = string.IsNullOrEmpty(post.Discord) ? null : post.Discord
                 }
 
             };

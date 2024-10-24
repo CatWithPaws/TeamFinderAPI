@@ -93,7 +93,7 @@ namespace server.Controllers
 
             user.TelegramLink = userToUpdate.TelegramLink;
             user.DiscordUsername = userToUpdate.DiscordUsername;
-            user.DispayName = userToUpdate.DisplayName;
+            user.DisplayName = userToUpdate.DisplayName;
 
             _userRepository.Save();
 

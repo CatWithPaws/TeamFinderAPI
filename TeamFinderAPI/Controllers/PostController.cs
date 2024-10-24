@@ -29,6 +29,7 @@ namespace TeamFinderAPI.Controllers
 
         private readonly int _postCount = 15;
 
+        [AllowAnonymous]
         [HttpGet("list/{page}")]
         public IResult GetAll([FromRoute]int page = 1){
             var posts =  _postRepository.GetAll().Skip(_postCount * (page -1)).Take(_postCount).ToList();
@@ -44,6 +45,7 @@ namespace TeamFinderAPI.Controllers
             return Results.Ok(DTO);
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IResult> Search([FromQuery] string query){
             
@@ -52,10 +54,12 @@ namespace TeamFinderAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IResult> GetAll(){
             return Results.Ok(_postRepository.GetAll());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IResult GetById([FromRoute]int id){
             Post post = _postRepository.GetById(id);

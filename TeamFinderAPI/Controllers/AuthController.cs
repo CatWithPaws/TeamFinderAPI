@@ -78,6 +78,7 @@ namespace TeamFinderAPI.Controllers
             {
                 Login = user.Name,
                 Email = user.Email,
+                DisplayName = user.Name,
                 Password = hashedPass
             };
 

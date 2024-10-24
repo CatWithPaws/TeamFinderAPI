@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TeamFinderAPI.Data;
@@ -11,9 +12,11 @@ using TeamFinderAPI.Data;
 namespace TeamFinderAPI.Migrations
 {
     [DbContext(typeof(TeamFindAPIContext))]
-    partial class TeamFindAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20241020165216_AddedDisplayNameFieldInUser2")]
+    partial class AddedDisplayNameFieldInUser2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
