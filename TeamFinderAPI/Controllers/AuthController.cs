@@ -16,6 +16,7 @@ using TeamFinderAPI.JwtAuthentication;
 using TeamFinderAPI.Repository;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using TeamFinderAPI.Security;
 
 namespace TeamFinderAPI.Controllers
 {
@@ -27,14 +28,13 @@ namespace TeamFinderAPI.Controllers
 
         System.Timers.Timer blacklistCheckTimer;
 
-        private const string RedirectUrl = "http://lequilesoftware.fun/api/auth/google/success";
-        private const string PkceSessionKey = "codeVerifier";
-        private const string GoogleScope = "profile";
+        private readonly string PkceSessionKey = "codeVerifier";
+        private readonly string GoogleScope = "profile";
 
-        private const string GoogleClientId = "334288315445-2vjeicc4u1hfpasr2ha0uckg4hjt86v4.apps.googleusercontent.com";
-        private const string GoogleClientSecret = "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";
+        private readonly string GoogleClientId = "";
+        private readonly string GoogleClientSecret = "";
 
-        private const string RefreshTokenSecret = "asdaghaslun178gfasd?1283f./asdf7912fnas812f/askfM<Afasj!l3%J*!5_";
+        private readonly string RefreshTokenSecret = "";
         
 
 
@@ -45,6 +45,12 @@ namespace TeamFinderAPI.Controllers
             blacklistCheckTimer.Elapsed += (a, b) => { CheckBlackList(); };
             blacklistCheckTimer.Enabled = true;
             blacklistCheckTimer.AutoReset = true;
+
+            GoogleClientId = SecretConfig.GoogleClientId;
+            GoogleClientSecret = SecretConfig.GoogleSecret;
+            RefreshTokenSecret = SecretConfig.RefreshTokenSecret;
+
+
         }
 
         private void CheckBlackList()
@@ -90,13 +96,14 @@ namespace TeamFinderAPI.Controllers
                 user.Name,
                 TimeSpan.FromMinutes(5),
                 new[] { "read_todo", "create_todo" });
-
+            var refreshToken = CreateRefreshToken(jwtOptions,newUser);
 
             var tokenExpiration = TimeSpan.FromSeconds(jwtOptions.ExpirationSeconds);
             //returns a json response with the access token
             return Results.Ok(new
             {
                 access_token = accessToken,
+                refresh_token = refreshToken,
                 expiration = (int)tokenExpiration.TotalSeconds,
                 type = "bearer",
                 username = user.Name
@@ -190,6 +197,7 @@ namespace TeamFinderAPI.Controllers
         }
 
         
+        
         private IResult AuthorizeGoogleUser(JwtOptions jwtOptions,string googleId){
             User googleUser = _userRepository.FindByGoogleId(googleId);
 
@@ -216,7 +224,7 @@ namespace TeamFinderAPI.Controllers
         }
 
         private string CreateRefreshToken(JwtOptions jwtOptions,User user){
-            var keyBytes = Encoding.UTF8.GetBytes(jwtOptions.RefreshSigningKey);
+            var keyBytes = Encoding.UTF8.GetBytes(RefreshTokenSecret);
             var symmetricKey = new SymmetricSecurityKey(keyBytes);
 
             var signingCredentials = new SigningCredentials(

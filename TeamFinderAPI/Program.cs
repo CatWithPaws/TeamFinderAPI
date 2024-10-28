@@ -9,6 +9,9 @@ using TeamFinderAPI.JwtAuthentication;
 using TeamFinderAPI.JwtAuthentication.Endpoints;
 using TeamFinderAPI.Repository;
 using TeamFinderAPI.Repository.PostReposity;
+using TeamFinderAPI.Security;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
+SecretConfig.GoogleSecret = builder.Configuration["Google:ClientSecret"];
+SecretConfig.GoogleClientId = builder.Configuration["Google:ClientId"];
+SecretConfig.DiscordClientId = builder.Configuration["Discord:ClientId"];
+SecretConfig.DiscordClientSecret = builder.Configuration["Discord:ClientSecret"];
+SecretConfig.RefreshTokenSecret = builder.Configuration["Auth:RefreshTokenSecret"];
 
 
 // Initialize Dependency Injection interfaces
