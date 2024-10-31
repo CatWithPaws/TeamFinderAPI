@@ -3,6 +3,9 @@ node{
         steps{
             
             echo "building project"
+            echo "testing successfull"
         }
     }
+
+
 }
