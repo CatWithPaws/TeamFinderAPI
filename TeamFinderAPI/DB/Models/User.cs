@@ -14,7 +14,6 @@ public class User{
     public byte[] Password { get; set; } = {};
     [Required]
     public string Email { get; set; } = string.Empty;
-    
     public string GoogleId { get; set; } = string.Empty;
     public virtual List<Post> Posts{ get;} = new List<Post>();
     public string RefreshToken { get; set; } = string.Empty;
