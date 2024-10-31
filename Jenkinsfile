@@ -11,7 +11,6 @@ pipeline {
             steps {
                 echo 'Testing..'
                 echo 'testing 123123123123123'
-                nunit
             }
         }
         stage('Deploy') {
