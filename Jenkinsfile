@@ -5,13 +5,14 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'dotnet build'
-                nunit testResultsPattern: 'tests/*.xml'
+                
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-                echo 'testing 123123123123123'
+                sh 'dotnet test --logger:"trx;LogFileName=../../test/testResults.xml"'
+                nunit testResultsPattern: 'tests/*.xml'
             }
         }
         stage('Deploy') {
