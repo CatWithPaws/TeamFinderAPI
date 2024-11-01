@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'dotnet build'
-                nunit 'tests/*.xml'
+                nunit testResultsPattern: 'tests/*.xml'
             }
         }
         stage('Test') {
