@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh 'dotnet test --logger:"trx;LogFileName=../../test/testResults.xml"'
-                nunit testResultsPattern: 'tests/*.xml'
+                nunit testResultsPattern: 'test/*.xml'
             }
         }
         stage('Deploy') {
