@@ -13,6 +13,7 @@
           "NUnit": "3.13.3",
           "NUnit.Analyzers": "3.6.1",
           "NUnit3TestAdapter": "4.2.1",
+          "NunitXml.TestLogger": "4.1.0",
           "TeamFinderAPI": "1.0.0",
           "coverlet.collector": "6.0.0"
         },
@@ -889,6 +890,7 @@
       },
       "NUnit.Analyzers/3.6.1": {},
       "NUnit3TestAdapter/4.2.1": {},
+      "NunitXml.TestLogger/4.1.0": {},
       "OpenTelemetry/1.9.0": {
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.Abstractions": "8.0.0",
@@ -1633,6 +1635,13 @@
       "sha512": "sha512-kgH8VKsrcZZgNGQXRpVCrM7TnNz9li3b/snH+YmnXUNqsaWa1Xw9EQWHpbzq4Li2FbTjTE/E5N5HdLNXzZ8BpQ==",
       "path": "nunit3testadapter/4.2.1",
       "hashPath": "nunit3testadapter.4.2.1.nupkg.sha512"
+    },
+    "NunitXml.TestLogger/4.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-l2zl8JttE12XY2QOf/W/PWcukhzp0Ez2XpD5s1HDk/RoLE3QLVKvQoOlAIbzbchtScNN9Hmuv6Iku6XOtZMrGg==",
+      "path": "nunitxml.testlogger/4.1.0",
+      "hashPath": "nunitxml.testlogger.4.1.0.nupkg.sha512"
     },
     "OpenTelemetry/1.9.0": {
       "type": "package",

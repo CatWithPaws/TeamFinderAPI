@@ -191,3 +191,5 @@
 /home/lequile/TeamFinderAPI/test/testresult.xml/TeamFinderAPITest.runtimeconfig.json
 /home/lequile/TeamFinderAPI/test/testresult.xml/TeamFinderAPITest.dll
 /home/lequile/TeamFinderAPI/test/testresult.xml/TeamFinderAPITest.pdb
+/home/lequile/TeamFinderAPI/TeamFinderAPITest/bin/Debug/net8.0/Microsoft.VisualStudio.TestPlatform.Extension.NUnit.Xml.TestLogger.dll
+/home/lequile/TeamFinderAPI/TeamFinderAPITest/bin/Debug/net8.0/Spekt.TestLogger.dll

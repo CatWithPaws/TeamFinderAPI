@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "F31RsdWim2H36SoA+KH7hv2U2e+i6SPbcZB6Nrg9ilew6ahr7ZTx2R0S9TlOjhLhqAuKzNWMV8AyvN1bpjC5Hw==",
+  "dgSpecHash": "FFMAq3s/bBZVN3GMJUa5Z7Z8+a47IID8xh1E0KFMhupXUbbUJhpVAtdC4T2Sju/B/ZC4QjUESFNUw7HFh9wrIw==",
   "success": true,
   "projectFilePath": "/home/lequile/TeamFinderAPI/TeamFinderAPITest/TeamFinderAPITest.csproj",
   "expectedPackageFiles": [
@@ -68,6 +68,7 @@
     "/home/lequile/.nuget/packages/nunit/3.13.3/nunit.3.13.3.nupkg.sha512",
     "/home/lequile/.nuget/packages/nunit.analyzers/3.6.1/nunit.analyzers.3.6.1.nupkg.sha512",
     "/home/lequile/.nuget/packages/nunit3testadapter/4.2.1/nunit3testadapter.4.2.1.nupkg.sha512",
+    "/home/lequile/.nuget/packages/nunitxml.testlogger/4.1.0/nunitxml.testlogger.4.1.0.nupkg.sha512",
     "/home/lequile/.nuget/packages/opentelemetry/1.9.0/opentelemetry.1.9.0.nupkg.sha512",
     "/home/lequile/.nuget/packages/opentelemetry.api/1.9.0/opentelemetry.api.1.9.0.nupkg.sha512",
     "/home/lequile/.nuget/packages/opentelemetry.api.providerbuilderextensions/1.9.0/opentelemetry.api.providerbuilderextensions.1.9.0.nupkg.sha512",

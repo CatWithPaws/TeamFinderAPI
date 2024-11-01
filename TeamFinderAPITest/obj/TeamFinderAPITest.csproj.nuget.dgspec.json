@@ -172,6 +172,10 @@
               "target": "Package",
               "version": "[4.2.1, )"
             },
+            "NunitXml.TestLogger": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
             "coverlet.collector": {
               "target": "Package",
               "version": "[6.0.0, )"
