@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh 'dotnet build'
+                nunit 'tests/*.xml'
             }
         }
         stage('Test') {
