@@ -11,7 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh 'dotnet test --logger:"trx;LogFileName=../../test/testResults.xml"'
+                sh 'dotnet test --results-directory ./test --logger:"nunit;LogFileName=testResults.xml"'
                 nunit testResultsPattern: 'test/*.xml'
             }
         }
