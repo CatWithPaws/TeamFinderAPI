@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh 'dotnet test --results-directory ./test --logger:"nunit;LogFileName=testResults.xml"'
-                nunit testResultsPattern: 'test/*.xml' failIfNoResults: true failedTestsFailBuild: true
+                nunit testResultsPattern: 'test/*.xml',failIfNoResults:'true',failedTestsFailBuild: 'true'
             }
         }
         stage('Deploy') {
