@@ -28,6 +28,5 @@ public class Tests
         Assert.That(userDTO.DiscordUsername.Equals(user.DiscordUsername), "User's DiscordUsername and UserDTO's DiscordUsername not equal");
         Assert.That(userDTO.Email.Equals(user.Email), "User's Email and UserDTO's Email not equal");
         Assert.That(userDTO.TelegramLink.Equals(user.TelegramLink), "User's TelegramLink and UserDTO's TelegramLink not equal");
-        Assert.Fail();
     }
 }
