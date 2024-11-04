@@ -18,9 +18,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "./proddeploy.sh"
                 echo 'Deployed successfully'    
+                
                 }
             }
+    }
+    post{
+        success{
+            sh "./proddeploy.sh"
         }
+    }
 }
