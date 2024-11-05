@@ -22,9 +22,4 @@ pipeline {
                 }
             }
     }
-    post{
-        success{
-            sh "./proddeploy.sh"
-        }
-    }
 }
