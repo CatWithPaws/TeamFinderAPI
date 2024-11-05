@@ -17,9 +17,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
-                echo 'Deployed successfully'    
-                
+                echo 'Sending deploy trigger to remote server'
+                sh 'curl -I http://admin:admin@192.168.0.200:8080/job/Production%20Server/build?token=sasdagagasfasfasfasfagasdasd'                
                 }
             }
     }
