@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Sending deploy trigger to remote server'
-                sh 'curl -I ${trigger-url}'                
+                sh 'curl -I $trigger-url'                
                 }
             }
     }
