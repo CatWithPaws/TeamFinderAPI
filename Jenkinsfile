@@ -18,8 +18,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Sending deploy trigger to remote server'
-                sh 'curl -I $JenkinsTriggerURL'                
-                }
+                script{
+                    withCredentials([
+                        secretText(
+                        credentialsId: 'JenkinsTriggerURL',
+                        variable: 'url')
+                    ]) {
+                        sh 'curl -I ' + url  
+                    }
+                             
             }
+        }
     }
 }
