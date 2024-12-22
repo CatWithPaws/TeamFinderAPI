@@ -31,10 +31,10 @@ namespace TeamFinderAPI.Controllers
         private readonly string PkceSessionKey = "codeVerifier";
         private readonly string GoogleScope = "profile";
 
-        private readonly string GoogleClientId = "";
-        private readonly string GoogleClientSecret = "";
+        private readonly string GoogleClientId = "334288315445-2vjeicc4u1hfpasr2ha0uckg4hjt86v4.apps.googleusercontent.com";
+        private readonly string GoogleClientSecret = "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";
 
-        private readonly string RefreshTokenSecret = "";
+        private readonly string RefreshTokenSecret = "asdaghaslun178gfasd?1283f./asdf7912fnas812f/askfM<Afasj!l3%J*!5_";
         
 
 
@@ -45,10 +45,6 @@ namespace TeamFinderAPI.Controllers
             blacklistCheckTimer.Elapsed += (a, b) => { CheckBlackList(); };
             blacklistCheckTimer.Enabled = true;
             blacklistCheckTimer.AutoReset = true;
-
-            GoogleClientId = SecretConfig.GoogleClientId;
-            GoogleClientSecret = SecretConfig.GoogleSecret;
-            RefreshTokenSecret = SecretConfig.RefreshTokenSecret;
 
 
         }
