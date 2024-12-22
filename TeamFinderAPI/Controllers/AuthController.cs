@@ -34,7 +34,7 @@ namespace TeamFinderAPI.Controllers
         private readonly string GoogleClientId = "334288315445-2vjeicc4u1hfpasr2ha0uckg4hjt86v4.apps.googleusercontent.com";
         private readonly string GoogleClientSecret = "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";
 
-        private readonly string RefreshTokenSecret = "asdaghaslun178gfasd?1283f./asdf7912fnas812f/askfM<Afasj!l3%J*!5_";
+        private readonly string RefreshTokenSecret = "asdaghaslun178gfasd?1283f./asdf7912fnas812f/askfM<Afasjasdasvzxzx";
         
 
 
